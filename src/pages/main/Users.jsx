@@ -95,6 +95,7 @@ const Users = () => {
 
   const handleCloseVideo = () => {
     setIsVideoShown(false);
+    camRef.current.pause();
     camRef.current.remove();
   }
 
