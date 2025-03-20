@@ -26,7 +26,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener("install", async () => {
   self.skipWaiting();
-  const cache = await caches.open("STATIC_CACHE");
+  const cache = await caches.open(STATIC_CACHE);
 
   console.log("Attempting to cache:", URLS);
 
