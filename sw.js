@@ -6,8 +6,8 @@ const DYNAMIC_CACHE = 'd-cache-v1'; // динамические данные
 const URLS = [
   "https://onfire22.github.io/pwa/",
   "https://onfire22.github.io/pwa/manifest.json",
-  "https://onfire22.github.io/pwa/static/css/main.c0d88c89.css",
-  "https://onfire22.github.io/pwa/static/js/main.4529fa53.js"
+  "https://onfire22.github.io/pwa/static/css/main.17322c3a.css",
+  "https://onfire22.github.io/pwa/static/js/main.4f07e24a.js"
 ];
 
 self.addEventListener('activate', (event) => {
