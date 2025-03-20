@@ -5,12 +5,12 @@ const DYNAMIC_CACHE = 'd-cache-v1'; // динамические данные
 
 const URLS = [
   '/',
-  '/index.html',
+  '/pwa',
   '/manifest.json',
   '/static/css/index.css',
   '/static/js/index.js',
   '/static/css/main.c0d88c89.css',
-  '/static/js/main.b4b92854.js',
+  '/static/js/main.f962a707.js',
 ];
 
 self.addEventListener('activate', (event) => {
