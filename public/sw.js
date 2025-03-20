@@ -4,13 +4,10 @@ const STATIC_CACHE = 's-cache-v1'; // статические данные
 const DYNAMIC_CACHE = 'd-cache-v1'; // динамические данные
 
 const URLS = [
-  '/',
-  '/pwa',
-  '/pwa/manifest.json',
-  '/pwa/static/css/index.css',
-  '/pwa/static/js/index.js',
-  '/pwa/static/css/main.c0d88c89.css',
-  '/pwa/static/js/main.f962a707.js',
+  "/pwa/",
+  "/pwa/manifest.json",
+  "/pwa/static/css/main.c0d88c89.css",
+  "/pwa/static/js/main.f962a707.js"
 ];
 
 self.addEventListener('activate', (event) => {
