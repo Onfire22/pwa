@@ -24,14 +24,27 @@ self.addEventListener('activate', (event) => {
 });
 
 
-self.addEventListener('install', async () => {
+self.addEventListener("install", async () => {
   self.skipWaiting();
-  const cache = await caches.open(STATIC_CACHE);
+  const cache = await caches.open("STATIC_CACHE");
+
+  console.log("Attempting to cache:", URLS);
+
   try {
     await cache.addAll(URLS);
+    console.log("Cache success:", URLS);
   } catch (e) {
-    console.log(e);
-    console.log(cache);
+    console.error("Cache error:", e);
+
+    // Проверяем каждый файл отдельно
+    for (const url of URLS) {
+      try {
+        const response = await fetch(url);
+        console.log(`Fetched ${url}:`, response.status, response.ok);
+      } catch (fetchError) {
+        console.error(`Fetch failed for ${url}:`, fetchError);
+      }
+    }
   }
 });
 
