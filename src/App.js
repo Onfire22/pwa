@@ -7,7 +7,7 @@ function App() {
 
   return (
     <Routes>
-      <Route index element={<Users />} />
+      <Route path='/' element={<Users />} />
       <Route path='/profile' element={<Profile />} />
       <Route path='/custom-scanner' element={<CustomScan />} />
     </Routes>
