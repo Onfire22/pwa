@@ -7,7 +7,7 @@ const URLS = [
   "/pwa/",
   "/pwa/manifest.json",
   "/pwa/static/css/main.c0d88c89.css",
-  "/pwa/static/js/main.f962a707.js"
+  "/pwa/static/js/main.4529fa53.js"
 ];
 
 self.addEventListener('activate', (event) => {
