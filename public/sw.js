@@ -33,18 +33,11 @@ self.addEventListener("install", async () => {
   try {
     await cache.addAll(URLS);
     console.log("Cache success:", URLS);
+
+    const cacheNames = await caches.keys();
+    console.log("Existing caches after install:", cacheNames);
   } catch (e) {
     console.error("Cache error:", e);
-
-    // Проверяем каждый файл отдельно
-    for (const url of URLS) {
-      try {
-        const response = await fetch(url);
-        console.log(`Fetched ${url}:`, response.status, response.ok);
-      } catch (fetchError) {
-        console.error(`Fetch failed for ${url}:`, fetchError);
-      }
-    }
   }
 });
 
