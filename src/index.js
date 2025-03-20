@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter basename='/pwa/'>
+  <BrowserRouter basename='/pwa'>
    <App />
   </BrowserRouter>
 );
