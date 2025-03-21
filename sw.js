@@ -43,11 +43,10 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open('pwa-cache-v1').then((cache) => {
+    caches.open(STATIC_CACHE).then((cache) => {
       return fetch('https://onfire22.github.io/pwa/asset-manifest.json')
         .then((response) => response.json())
         .then((data) => {
-          console.log('Полученные данные:', data);
           const assets = data.files;
 
           const urlsToCache = [
@@ -55,6 +54,7 @@ self.addEventListener('install', (event) => {
             assets['main.css'],
             assets['main.js'],
           ];
+          console.log('Полученные данные:', urlsToCache);
           return cache.addAll(urlsToCache);
         });
     })
