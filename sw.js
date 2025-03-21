@@ -24,21 +24,39 @@ self.addEventListener('activate', (event) => {
 });
 
 
-self.addEventListener("install", async () => {
-  self.skipWaiting();
-  const cache = await caches.open(STATIC_CACHE);
+// self.addEventListener("install", async () => {
+//   self.skipWaiting();
+//   const cache = await caches.open(STATIC_CACHE);
+//
+//   console.log("Attempting to cache:", URLS);
+//
+//   try {
+//     await cache.addAll(URLS);
+//     console.log("Cache success:", URLS);
+//
+//     const cacheNames = await caches.keys();
+//     console.log("Existing caches after install:", cacheNames);
+//   } catch (e) {
+//     console.error("Cache error:", e);
+//   }
+// });
 
-  console.log("Attempting to cache:", URLS);
-
-  try {
-    await cache.addAll(URLS);
-    console.log("Cache success:", URLS);
-
-    const cacheNames = await caches.keys();
-    console.log("Existing caches after install:", cacheNames);
-  } catch (e) {
-    console.error("Cache error:", e);
-  }
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open('pwa-cache-v1').then((cache) => {
+      return fetch('/asset-manifest.json')
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .then((assets) => {
+          const urlsToCache = [
+            '/',
+            assets['main.css'],
+            assets['main.js'],
+          ];
+          return cache.addAll(urlsToCache);
+        });
+    })
+  );
 });
 
 function openDatabase() {
@@ -151,20 +169,6 @@ self.addEventListener('fetch', (e) => {
           headers: { 'Content-Type': 'text/plain' }
         });
       }
-    }
-
-    if (/\/static\/js\/main\..*\.js$/.test(e.request.url)) {
-      console.log('regEx!!!');
-      e.respondWith(
-        caches.match(e.request).then((response) => {
-          return response || fetch(e.request).then((fetchResponse) => {
-            return caches.open(STATIC_CACHE).then((cache) => {
-              cache.put(e.request, fetchResponse.clone());
-              return fetchResponse;
-            });
-          });
-        })
-      );
     }
 
     try {
