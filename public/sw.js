@@ -49,13 +49,15 @@ self.addEventListener('install', (event) => {
         .then((data) => {
           const assets = data.files;
 
-          const urlsToCache = [
-            '/',
-            assets['main.css'],
-            assets['main.js'],
-          ];
-          console.log('Полученные данные:', urlsToCache);
-          return cache.addAll(urlsToCache);
+          const urls = Object.keys(assets).reduce((acc, key) => {
+            if (key === 'main.css' || key === 'main.js') {
+              acc.push(`https://onfire22.github.io${assets[key]}`)
+            }
+            return acc;
+          }, []);
+
+          console.log('Полученные данные:', urls);
+          return cache.addAll(urls);
         });
     })
   );
