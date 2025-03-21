@@ -8,7 +8,6 @@ const BASE_URL = 'https://onfire22.github.io';
 const URLS = [
   "main.css",
   "main.js",
-  "index.html",
 ];
 
 self.addEventListener('activate', (event) => {
@@ -57,7 +56,7 @@ self.addEventListener('install', async () => {
     }, []);
 
     console.log('cached successfully', urls);
-    return cache.addAll(urls);
+    return cache.addAll([...urls, `${BASE_URL}/pwa/index.html`]);
   } catch (e) {
     console.log(e);
   }
