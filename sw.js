@@ -3,11 +3,12 @@
 const STATIC_CACHE = 's-cache-v1'; // статические данные
 const DYNAMIC_CACHE = 'd-cache-v1'; // динамические данные
 
+const BASE_URL = 'https://onfire22.github.io';
+
 const URLS = [
-  "https://onfire22.github.io/pwa/",
-  "https://onfire22.github.io/pwa/manifest.json",
-  "https://onfire22.github.io/pwa/static/css/main.17322c3a.css",
-  "https://onfire22.github.io/pwa/static/js/main.4f07e24a.js"
+  "main.css",
+  "main.js",
+  "index.html",
 ];
 
 self.addEventListener('activate', (event) => {
@@ -41,26 +42,25 @@ self.addEventListener('activate', (event) => {
 //   }
 // });
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
-      return fetch('https://onfire22.github.io/pwa/asset-manifest.json')
-        .then((response) => response.json())
-        .then((data) => {
-          const assets = data.files;
+self.addEventListener('install', async () => {
+  self.skipWaiting();
+  const cache = await caches.open(STATIC_CACHE);
+  try {
+    const request = await fetch(`${BASE_URL}/pwa/asset-manifest.json`);
+    const { files } = await request.json();
 
-          const urls = Object.keys(assets).reduce((acc, key) => {
-            if (key === 'main.css' || key === 'main.js') {
-              acc.push(`https://onfire22.github.io${assets[key]}`)
-            }
-            return acc;
-          }, []);
+    const urls = Object.keys(files).reduce((acc, key) => {
+      if (URLS.includes(key)) {
+        acc.push(`${BASE_URL}${files[key]}`);
+      }
+      return acc;
+    }, []);
 
-          console.log('Полученные данные:', urls);
-          return cache.addAll(urls);
-        });
-    })
-  );
+    console.log('cached successfully', urls);
+    return cache.addAll(urls);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 function openDatabase() {
