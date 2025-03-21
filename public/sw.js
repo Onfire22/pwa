@@ -153,6 +153,20 @@ self.addEventListener('fetch', (e) => {
       }
     }
 
+    if (/\/static\/js\/main\..*\.js$/.test(e.request.url)) {
+      console.log('regEx!!!');
+      e.respondWith(
+        caches.match(e.request).then((response) => {
+          return response || fetch(e.request).then((fetchResponse) => {
+            return caches.open(STATIC_CACHE).then((cache) => {
+              cache.put(e.request, fetchResponse.clone());
+              return fetchResponse;
+            });
+          });
+        })
+      );
+    }
+
     try {
       const response = await fetch(request);
       if (!response || response.status !== 200) throw new Error('Плохой ответ');
