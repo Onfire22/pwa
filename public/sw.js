@@ -56,7 +56,7 @@ self.addEventListener('install', async () => {
     }, []);
 
     console.log('cached successfully', urls);
-    return cache.addAll([...urls, `${BASE_URL}/`]);
+    return cache.addAll([...urls, `${BASE_URL}/pwa`]);
   } catch (e) {
     console.log(e);
   }
