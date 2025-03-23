@@ -57,7 +57,7 @@ self.addEventListener('install', async () => {
     }, []);
 
     console.log('cached successfully', urls);
-    return cache.addAll([...urls, `${BASE_URL}/pwa`, `${BASE_URL}/pwa/manifest.json`]);
+    return cache.addAll([...urls, `${BASE_URL}/pwa/`, `${BASE_URL}/pwa/manifest.json`]);
   } catch (e) {
     console.log(e);
   }
