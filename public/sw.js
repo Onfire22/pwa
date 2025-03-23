@@ -11,16 +11,17 @@ const URLS = [
 ];
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys
-          .filter((key) => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
-          .map((key) => caches.delete(key))
-      );
-    })
-  );
-  self.clients.claim();
+	event.waitUntil(
+		caches.keys().then((keys) => {
+			console.log('Активируем SW, кеши:', keys);
+			return Promise.all(
+				keys.filter((key) => ![STATIC_CACHE, DYNAMIC_CACHE].includes(key))
+					.map((key) => {
+						return caches.delete(key);
+					})
+			);
+		})
+	);
 });
 
 
