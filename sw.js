@@ -11,16 +11,17 @@ const URLS = [
 ];
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys
-          .filter((key) => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
-          .map((key) => caches.delete(key))
-      );
-    })
-  );
-  self.clients.claim();
+	event.waitUntil(
+		caches.keys().then((keys) => {
+			console.log('Активируем SW, кеши:', keys);
+			return Promise.all(
+				keys.filter((key) => ![STATIC_CACHE, DYNAMIC_CACHE].includes(key))
+					.map((key) => {
+						return caches.delete(key);
+					})
+			);
+		})
+	);
 });
 
 
@@ -56,7 +57,7 @@ self.addEventListener('install', async () => {
     }, []);
 
     console.log('cached successfully', urls);
-    return cache.addAll([...urls, `${BASE_URL}/pwa`]);
+    return cache.addAll([...urls, `${BASE_URL}/pwa`, `${BASE_URL}/pwa/manifest.json`]);
   } catch (e) {
     console.log(e);
   }
