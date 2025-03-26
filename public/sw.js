@@ -24,24 +24,6 @@ self.addEventListener('activate', (event) => {
 	);
 });
 
-
-// self.addEventListener("install", async () => {
-//   self.skipWaiting();
-//   const cache = await caches.open(STATIC_CACHE);
-//
-//   console.log("Attempting to cache:", URLS);
-//
-//   try {
-//     await cache.addAll(URLS);
-//     console.log("Cache success:", URLS);
-//
-//     const cacheNames = await caches.keys();
-//     console.log("Existing caches after install:", cacheNames);
-//   } catch (e) {
-//     console.error("Cache error:", e);
-//   }
-// });
-
 self.addEventListener('install', async () => {
   self.skipWaiting();
   const cache = await caches.open(STATIC_CACHE);

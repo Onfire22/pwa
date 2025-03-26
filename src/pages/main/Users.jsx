@@ -22,11 +22,11 @@ const Users = () => {
     if (navigator.onLine) {
       try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
-        showNotification('Успешно', 'Список успешно загружен', '/icons/mail.svg');
+        showNotification('Успешно', 'Список успешно загружен', `${window.location.origin}/icons/mail.svg`);
         const data = await response.json();
         setUsers(data);
       } catch (e) {
-        showNotification('Ошибка', 'Список не загружен, произошла ошибка', '/icons/error.svg')
+        showNotification('Ошибка', 'Список не загружен, произошла ошибка', `${window.location.origin}/icons/error.svg`)
         console.log(e);
       }
     } else {
