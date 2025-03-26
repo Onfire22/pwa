@@ -7,6 +7,8 @@ import { registerBackgroundSync } from '../../utils/backgroundFetchApi';
 import { requestWakeLock } from "../../utils/wakeLock";
 import './style.css';
 
+const BASE_URL = 'https://onfire22.github.io/pwa';
+
 const Users = () => {
   const [users, setUsers] = useState([]);
   const { codes, startBarcodeScanner } = useBarcodeScanner();
@@ -22,11 +24,11 @@ const Users = () => {
     if (navigator.onLine) {
       try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
-        showNotification('Успешно', 'Список успешно загружен', `${window.location.origin}/icons/mail.svg`);
+        showNotification('Успешно', 'Список успешно загружен', `${BASE_URL}/icons/mail.svg`);
         const data = await response.json();
         setUsers(data);
       } catch (e) {
-        showNotification('Ошибка', 'Список не загружен, произошла ошибка', `${window.location.origin}/icons/error.svg`)
+        showNotification('Ошибка', 'Список не загружен, произошла ошибка', `${BASE_URL}/icons/error.svg`)
         console.log(e);
       }
     } else {
