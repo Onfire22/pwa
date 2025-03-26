@@ -3,6 +3,8 @@ import { showNotification } from "../../utils";
 import './style.css';
 import {useNavigate} from "react-router";
 
+const BASE_URL = 'https://onfire22.github.io/pwa';
+
 const Profile = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
@@ -61,7 +63,7 @@ const Profile = () => {
             <button type="button" onClick={() => {
               setUserInfo(userInput);
               setMode('read');
-              showNotification('Успешно', 'Данные успешно обновлены', '/icons/check.svg');
+              showNotification('Успешно', 'Данные успешно обновлены', `${BASE_URL}/icons/check.svg`);
             }}>Сохранить</button>
           </form>
         )}
