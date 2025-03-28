@@ -33,7 +33,7 @@ const Users = () => {
     }
     
     webSocket.onmessage = (event) => {
-      showNotification('Новое сообщение', event.data, '');
+      showNotification(`Новое сообщение от ${event.data.from}`, event.data.content, `${BASE_URL}/icons/message.svg`);
     };
   }, [username, webSocket]);
   
