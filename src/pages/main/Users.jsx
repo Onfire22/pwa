@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { savePendingRequest, showNotification } from "../../utils";
 import { useBarcodeScanner } from "../../utils/barcodeDetection";
@@ -17,8 +17,35 @@ const Users = () => {
   const [location, setLocation] = useState({});
   const [city, setCity] = useState('');
   const [isVideoShown, setIsVideoShown] = useState(false);
+  const [username, setUsername] = useState(null);
+  const [text, setText] = useState('');
 
   const camRef = useRef(null);
+  const webSocket = useMemo(() => {
+    return new WebSocket('wss://server-zjg0.onrender.com');
+  }, [username]);
+  
+  useEffect(() => {
+    if (username) {
+      webSocket.onopen = () => {
+        webSocket.send(JSON.stringify({ type: 'register', username }))
+      }
+    }
+    
+    webSocket.onmessage = (event) => {
+      showNotification('Новое сообщение', event.data, '');
+    };
+  }, [username, webSocket]);
+  
+  const sendMessage = (e, message) => {
+    e.preventDefault();
+    const to = username === 'User1' ? 'User2' : 'User1';
+    if (webSocket) {
+      webSocket.send(JSON.stringify({ type: 'message', to, content: message }));
+    } else {
+      console.log('Нет соединения');
+    }
+  };
 
   const getUsers = async () => {
     if (navigator.onLine) {
@@ -99,7 +126,7 @@ const Users = () => {
     setIsVideoShown(false);
     camRef.current.pause();
     camRef.current.remove();
-  }
+  };
 
   return (
     <div className="page">
@@ -113,6 +140,11 @@ const Users = () => {
         <ul className="header__menu">
           <li className="header__menu-item">
             <Link className="header__menu-button" to='/profile'>Мой профиль</Link>
+          </li>
+          <li className="header__menu-item">
+            <p>Выберите пользователя:</p>
+            <button type="button" onClick={() => setUsername('User1')}>User_1</button>
+            <button type="button" onClick={() => setUsername('User2')}>User_2</button>
           </li>
           <li className="header__menu-item">
             {showButton && <button className="header__menu-button" onClick={handleInstallClick}>Установить</button>}
@@ -138,6 +170,21 @@ const Users = () => {
         <div>Широта: {location?.coords?.latitude || '-'}</div>
         <div>Долгота: {location?.coords?.longitude || '-'}</div>
         <div>Город: {city}</div>
+      </div>
+      <div className="message">
+        <form className="form" onSubmit={(e) => sendMessage(e, text)}>
+          <textarea
+            className="text"
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+            placeholder={`Выберите пользователя и введите сообщение. ${username ? `Сообщение будет отправлено пользователю ${username === 'User1' ? 'User2' : 'User1'}` : ''}`}
+          />
+          <button type="submit" disabled={!Boolean(username)}>Отправить</button>
+        </form>
       </div>
       <div className="container">
         {users.map(({ id, name, phone, username, email }) => {

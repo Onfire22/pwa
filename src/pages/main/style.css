@@ -14,10 +14,17 @@
 }
 
 .header__menu-item {
+  display: flex;
+  min-height: 193px;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
   font-size: 40px;
   border: 1px solid black;
-  text-align: center;
+}
+
+.header__menu-item:nth-child(2) {
+  flex-direction: column;
 }
 
 .header__menu-button {
@@ -67,4 +74,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+.text {
+  font-size: 20px;
 }

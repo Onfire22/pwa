@@ -17,9 +17,13 @@
 .input {
   display: block;
   height: 50px;
-  font-size: 50px;
+  font-size: 30px;
 }
 
 .btn {
   font-size: 50px;
+}
+
+.container {
+  padding: 15px;
 }
