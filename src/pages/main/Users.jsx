@@ -46,6 +46,7 @@ const Users = () => {
     const to = username === 'User1' ? 'User2' : 'User1';
     if (webSocket) {
       webSocket.send(JSON.stringify({ type: 'message', to, content: message }));
+      setText('');
     } else {
       console.log('Нет соединения');
     }
@@ -147,8 +148,20 @@ const Users = () => {
           </li>
           <li className="header__menu-item">
             <p>Выберите пользователя:</p>
-            <button type="button" onClick={() => setUsername('User1')}>User_1</button>
-            <button type="button" onClick={() => setUsername('User2')}>User_2</button>
+            <button
+              className={username === 'User1' && 'btn-active'}
+              type="button"
+              onClick={() => setUsername('User1')}
+            >
+              User_1
+            </button>
+            <button
+              className={username === 'User2' && 'btn-active'}
+              type="button"
+              onClick={() => setUsername('User2')}
+            >
+              User_2
+            </button>
           </li>
           <li className="header__menu-item">
             {showButton && <button className="header__menu-button" onClick={handleInstallClick}>Установить</button>}
