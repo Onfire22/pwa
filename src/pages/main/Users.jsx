@@ -37,9 +37,6 @@ const Users = () => {
       const { from, content } = JSON.parse(event.data);
       showNotification(`Новое сообщение от ${from}`, content, `${BASE_URL}/icons/message.svg`);
     };
-    return (() => {
-      webSocket.close();
-    });
   }, [username, webSocket]);
   
   const sendMessage = (e, message) => {
