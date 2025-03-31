@@ -19,7 +19,7 @@ export const showNotification = async (title, body, icon) => {
 }
 
 export const subscribeUser = async (username) => {
-  const registration = await navigator.serviceWorker.register('/sw.js');
+  const registration = await navigator.serviceWorker.ready;
   
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
