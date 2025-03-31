@@ -118,6 +118,17 @@ self.addEventListener('sync', (event) => {
   }
 });
 
+self.addEventListener("push", (event) => {
+  if (event.data) {
+    const data = event.data.json();
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon || "/icon.png",
+      vibrate: [200, 100, 200],
+    });
+  }
+});
+
 // сервисворкер для уведомлений
 self.addEventListener("message", async (e) => {
   if (e.data.type === "SHOW_NOTIFICATION") {
