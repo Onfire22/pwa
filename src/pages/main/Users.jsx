@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
-import { savePendingRequest, showNotification } from "../../utils";
+import { savePendingRequest, showNotification, subscribeUser } from "../../utils";
 import { useBarcodeScanner } from "../../utils/barcodeDetection";
 import { getCityName } from "../../utils/geolocation";
 import { registerBackgroundSync } from '../../utils/backgroundFetchApi';
@@ -27,6 +27,7 @@ const Users = () => {
   
   useEffect(() => {
     if (username) {
+      subscribeUser(username);
       webSocket.onopen = () => {
         webSocket.send(JSON.stringify({ type: 'register', username }))
       }
