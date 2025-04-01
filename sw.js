@@ -136,7 +136,9 @@ self.addEventListener("message", async (e) => {
       await self.registration.showNotification(e.data.title, {
         body: e.data.body,
         icon: e.data.icon,
-        vibrate: [200, 100, 200],
+        requireInteraction: e.data.requireInteraction,
+        vibrate: e.data.vibrate,
+        priority: e.data.priority,
       });
     } catch (error) {
       console.log('error')
