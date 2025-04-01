@@ -15,6 +15,9 @@ export const showNotification = async (title, body, icon) => {
     title,
     body,
     icon,
+    requireInteraction: true,
+    vibrate: [200, 100, 200],
+    priority: "high",
   });
 }
 
