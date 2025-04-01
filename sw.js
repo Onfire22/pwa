@@ -139,6 +139,10 @@ self.addEventListener("message", async (e) => {
         requireInteraction: e.data.requireInteraction,
         vibrate: e.data.vibrate,
         priority: e.data.priority,
+        actions: [
+          { action: "open", title: "Открыть", },
+          { action: "close", title: "Закрыть", }
+        ],
       });
     } catch (error) {
       console.log('error')
