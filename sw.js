@@ -118,13 +118,19 @@ self.addEventListener('sync', (event) => {
   }
 });
 
-self.addEventListener("push", (event) => {
-  if (event.data) {
-    const data = event.data.json();
+self.addEventListener("push", (e) => {
+  if (e.data) {
+    const data = e.data.json();
     self.registration.showNotification(data.title, {
       body: data.body,
-      icon: data.icon || "/icon.png",
+      icon: data.icon || "https://onfire22.github.io/pwa/icons/message.svg",
       vibrate: [200, 100, 200],
+      priority: e.data.priority,
+      requireInteraction: e.data.requireInteraction,
+      actions: [
+        { action: "open", title: "Открыть", },
+        { action: "close", title: "Закрыть", }
+      ],
     });
   }
 });
